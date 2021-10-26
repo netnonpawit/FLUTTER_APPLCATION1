@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/states/testdb.dart';
 import 'package:flutter_application_1/utility/my_style.dart';
-
-
 
 class firstsceen extends StatefulWidget {
   firstsceen({Key? key}) : super(key: key);
@@ -13,7 +10,7 @@ class firstsceen extends StatefulWidget {
 }
 
 class _firstsceenState extends State<firstsceen> {
- late double screenWidth, screenHeigth;
+  late double screenWidth, screenHeigth;
 
   @override
   Widget build(BuildContext context) {
@@ -46,17 +43,25 @@ class _firstsceenState extends State<firstsceen> {
   ElevatedButton buildbutton1() {
     return ElevatedButton(
       child: Text('วินิจฉัยโรค'),
-      onPressed: () { 
-        Navigator.push(context, new MaterialPageRoute(
-   builder: (context) => new testdb()));
- },
-      style: ElevatedButton.styleFrom(
-          shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(28.0),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => testdb(),
           ),
-          primary: Colors.green.shade900,
-          padding: EdgeInsets.symmetric(horizontal: 60, vertical: 13),
-          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(28.0),
+        ),
+        primary: Colors.green.shade900,
+        padding: EdgeInsets.symmetric(horizontal: 60, vertical: 13),
+        textStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
@@ -66,11 +71,15 @@ ElevatedButton buildbutton2() {
     child: Text('หาโรงพยาบาล'),
     onPressed: () {},
     style: ElevatedButton.styleFrom(
-        shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(28.0),
-        ),
-        primary: Colors.green.shade400,
-        padding: EdgeInsets.symmetric(horizontal: 46, vertical: 13),
-        textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28.0),
+      ),
+      primary: Colors.green.shade400,
+      padding: EdgeInsets.symmetric(horizontal: 46, vertical: 13),
+      textStyle: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
   );
 }
