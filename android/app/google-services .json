@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "299680206423",
+    "project_id": "diagnose-disease-project",
+    "storage_bucket": "diagnose-disease-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299680206423:android:d204b60e5087b10e3a9d12",
+        "android_client_info": {
+          "package_name": "com.flutterthailand.flutter_application_finalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299680206423-ogv0s2ebgrlftk2igoa2eaqbeljjoqmq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo19c8IH5N4_voacS72W7EqWgANAJYlZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299680206423-ogv0s2ebgrlftk2igoa2eaqbeljjoqmq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
