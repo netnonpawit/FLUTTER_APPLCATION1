@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/states/testdb.dart';
+import 'package:flutter_application_1/states/test_gps.dart';
+
+import 'package:flutter_application_1/states/testgps/screens/search.dart';
+
+
 import 'package:flutter_application_1/utility/my_style.dart';
 
 class firstsceen extends StatefulWidget {
@@ -22,15 +26,22 @@ class _firstsceenState extends State<firstsceen> {
         child: Stack(
           children: [
             MyStyle().buildbackgrond(),
+            Container(
+              alignment: Alignment.topCenter,
+              child: Image(
+                  image: AssetImage('images/logo.png'), fit: BoxFit.cover),
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildbutton1(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  buildbutton2()
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      manbutton(),
+                      
+                    ],
+                  )
                 ],
               ),
             )
@@ -40,46 +51,20 @@ class _firstsceenState extends State<firstsceen> {
     ));
   }
 
-  ElevatedButton buildbutton1() {
-    return ElevatedButton(
-      child: Text('วินิจฉัยโรค'),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => testdb(),
-          ),
-        );
-      },
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28.0),
-        ),
-        primary: Colors.green.shade900,
-        padding: EdgeInsets.symmetric(horizontal: 60, vertical: 13),
-        textStyle: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+  Container manbutton() {
+    return Container(
+                      width: 110,
+                      height: 110,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('images/man.png'))),
+                              child: TextButton(onPressed: () {
+                                Navigator.push(context, new MaterialPageRoute(
+   builder: (context) => new Search()));
+                              }, child: Text('') ),
+                    );
   }
-}
 
-ElevatedButton buildbutton2() {
-  return ElevatedButton(
-    child: Text('หาโรงพยาบาล'),
-    onPressed: () {},
-    style: ElevatedButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-      ),
-      primary: Colors.green.shade400,
-      padding: EdgeInsets.symmetric(horizontal: 46, vertical: 13),
-      textStyle: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  );
+ 
+
 }

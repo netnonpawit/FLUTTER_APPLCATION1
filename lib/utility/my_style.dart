@@ -15,4 +15,14 @@ class MyStyle {
       ),
     );
   }
+   Scaffold buildbackgrond2() {
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('images/backgrond2.jpg'), fit: BoxFit.cover),
+        ),
+      ),
+    );
+  }
 }
