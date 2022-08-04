@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class lacator {
+class locator {
   String locatorName;
   String address;
   String descripstion;
@@ -9,7 +9,7 @@ class lacator {
   LatLng locationCoords;
   //Image image;
 
-  lacator(
+  locator(
       {required this.locatorName,
       required this.address,
       required this.descripstion,
@@ -18,8 +18,8 @@ class lacator {
       //required this.image});
       });
 }
-final List<lacator> lacation = [
-  lacator(
+final List<locator> lacation = [
+  locator(
       locatorName: 'ChangArena',
       address: '18 W 29th St',
       descripstion:

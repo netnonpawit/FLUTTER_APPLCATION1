@@ -16,8 +16,9 @@ class _SearchState extends State<Search> {
   late GoogleMapController mapController;
 
   List<Marker> allMarkers = [];
-   PageController _pageController;
-   int prevPage;
+   late PageController _pageController;
+   late int prevPage;
+  
   @override
   void initState(){
      super.initState();
@@ -29,8 +30,8 @@ class _SearchState extends State<Search> {
       ..addListener(_onScroll);
   }
    void _onScroll() {
-    if (_pageController.page.toInt() != prevPage) {
-      prevPage = _pageController.page.toInt();
+    if (_pageController.page as int  != prevPage) {
+      prevPage = _pageController.page as int;
       moveCamera();
     }
   }
@@ -80,14 +81,17 @@ class _SearchState extends State<Search> {
       position: LatLng(14.9839039, 103.0763868),
       infoWindow: InfoWindow(title: 'HomeProBR'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
+      
+     
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter Google Maps'),
       ),
-      body: Container(
-        child: FutureBuilder(
+      body:Stack(children: <Widget>[
+        Container(
+           child: FutureBuilder(
           future: _getLocation(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
@@ -96,11 +100,12 @@ class _SearchState extends State<Search> {
                 onMapCreated: _onMapCreated,
                 myLocationEnabled: true,
                 initialCameraPosition: CameraPosition(
-                    target:
-                        LatLng(userLocation.latitude, userLocation.longitude),
+                    target:LatLng(14.9839039, 103.0763868),
+                        //LatLng(userLocation.latitude, userLocation.longitude),
                     zoom: 15),
                     markers: Set.from(allMarkers),
-              );
+               );
+              
             } else {
               return Center(
                 child: Column(
@@ -110,9 +115,19 @@ class _SearchState extends State<Search> {
                   ],
                 ),
               );
+              
             }
           },
         )
+        ),
+       Positioned(child: Container(height: 200.0,
+       width: MediaQuery.of(context).size.width,
+       child:PageView.builder(  controller: _pageController,
+                  itemCount: locator.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _locatorList(index);} ,))
+      )],
+      
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -133,4 +148,13 @@ class _SearchState extends State<Search> {
       ),
     );
   }
+
+  moveCamera() {
+    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: locator[_pageController.page.toInt()].locationCoords,
+        zoom: 14.0,
+        bearing: 45.0,
+        tilt: 45.0)));
+  }
 }
+
