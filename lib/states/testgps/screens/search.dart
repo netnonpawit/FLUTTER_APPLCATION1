@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/states/testgps/screens/gps_model.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,104 +10,60 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  late Position userLocation;
-  late GoogleMapController mapController;
-
+  Position? userLocation;
+  GoogleMapController? mapController;
+   final controller  = ScrollController();
   List<Marker> allMarkers = [];
-   late PageController _pageController;
-   late int prevPage;
-   late int _currentPage;
+  PageController? _pageController;
+  int? prevPage;
 
- 
+
   @override
-  void initState(){
-     super.initState();
-     lacation.forEach((element) {
-       allMarkers.add(Marker(markerId: MarkerId(element.locatorName),draggable: false,infoWindow:InfoWindow(title: element.locatorName,snippet: element.address)
-       ,position: element.locationCoords));
-     });
-     _pageController = PageController(initialPage: 1, viewportFraction: 0.8)
-      ..addListener(_onScroll);
-       _currentPage = 0;
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page!.toInt();
-      });
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    lacation.forEach((element) {
+      allMarkers.add(Marker(
+          markerId: MarkerId(element.locatorName),
+          draggable: false,
+          infoWindow:
+              InfoWindow(title: element.locatorName, snippet: element.address),
+          position: element.locationCoords));
     });
+    _pageController = PageController(initialPage: 1, viewportFraction: 0.8)
+      ..addListener(_onScroll);
   }
-   void _onScroll() {
-    if (_pageController.page as int  != prevPage) {
-      prevPage = _pageController.page as int;
+
+  void _onScroll() {
+    if (_pageController?.page!.toInt() != prevPage) {
+      prevPage = _pageController?.page as int;
       moveCamera();
     }
   }
-  
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
-  Future<Position> _getLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    userLocation = await Geolocator.getCurrentPosition();
-    return userLocation;
-    
-  }
-
-  Marker ChangArena = Marker(
-      markerId: MarkerId('ChangArena'),
-      position: LatLng(14.9658746, 103.0921753),
-      infoWindow: InfoWindow(title: 'ChangArena'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue));
-  Marker BRH = Marker(
-      markerId: MarkerId('BRH'),
-      position: LatLng(15.005684, 103.0985359),
-      infoWindow: InfoWindow(title: 'BRH'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen));
-  Marker HomeProBR = Marker(
-      markerId: MarkerId('HomeProBR'),
-      position: LatLng(14.9839039, 103.0763868),
-      infoWindow: InfoWindow(title: 'HomeProBR'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
-      
-     _locatorList (index){
-      return AnimatedBuilder(
-      animation: _pageController,
-       builder: (BuildContext context, Widget? child) {
+  _locatorList(index) {
+    return AnimatedBuilder(
+      animation: _pageController!,
+      builder: (BuildContext context, Widget? child) {
         double value = 1;
-        if (_pageController.position.haveDimensions) {
-          value = _pageController.page ??  - index;
+        if (_pageController!.position.haveDimensions) {
+          value = _pageController!.page ?? -index;
           value = (1 - (value.abs() * 0.3) + 0.06).clamp(0.0, 1.0);
         }
         return Center(
-          child: SizedBox(
-            height: Curves.easeInOut.transform(value) * 125.0,
-            width: Curves.easeInOut.transform(value) * 350.0,
-            child: widget,
+            child: SizedBox(
+          height: Curves.easeInOut.transform(value) * 125.0,
+          width: Curves.easeInOut.transform(value) * 350.0,
+          child: widget,
         ));
       },
       child: InkWell(
           onTap: () {
-            // moveCamera();
+            moveCamera();
           },
           child: Stack(children: [
             Center(
@@ -176,55 +130,93 @@ class _SearchState extends State<Search> {
           ])),
     );
   }
- 
+
+  Future<Object?> _getLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    userLocation = await Geolocator.getCurrentPosition();
+    return userLocation;
+  }
+
+  Marker ChangArena = Marker(
+      markerId: MarkerId('ChangArena'),
+      position: LatLng(14.9658746, 103.0921753),
+      infoWindow: InfoWindow(title: 'ChangArena'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue));
+  Marker BRH = Marker(
+      markerId: MarkerId('BRH'),
+      position: LatLng(15.005684, 103.0985359),
+      infoWindow: InfoWindow(title: 'BRH'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen));
+  Marker HomeProBR = Marker(
+      markerId: MarkerId('HomeProBR'),
+      position: LatLng(14.9839039, 103.0763868),
+      infoWindow: InfoWindow(title: 'HomeProBR'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Google Maps'),
-      ),
-      body:Stack(children: <Widget>[
-        Container(
-           child: FutureBuilder(
-          future: _getLocation(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return GoogleMap(
-                mapType: MapType.normal,
-                onMapCreated: _onMapCreated,
-                myLocationEnabled: true,
-                initialCameraPosition: CameraPosition(
-                    target:LatLng(14.9839039, 103.0763868),
-                        //LatLng(userLocation.latitude, userLocation.longitude),
-                    zoom: 15),
-                    markers: Set.from(allMarkers),
-               );
-              
-            } else {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              );
-              
-            }
-          },
-        )
+        appBar: AppBar(
+          title: Text('Flutter Google Maps'),
         ),
-       Positioned(child: Container(height: 200.0,
-       width: MediaQuery.of(context).size.width,
-       child:PageView.builder(  controller: _pageController,
-                  itemCount: lacation.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _locatorList(index);} ,))
-      )],
-      
-      ),
-      floatingActionButton: FloatingActionButton.extended(
+        body: Stack(children: <Widget>[
+          Container(
+              height: MediaQuery.of(context).size.height - 50.0,
+              width: MediaQuery.of(context).size.width,
+              child: FutureBuilder(
+                future: _getLocation(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      child: GoogleMap(
+                        mapType: MapType.normal,
+                        onMapCreated: _onMapCreated,
+                        myLocationEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                            target: LatLng(14.9839039, 103.0763868),
+                            //LatLng(userLocation.latitude, userLocation.longitude),
+                            zoom: 15),
+                        markers: Set.from(allMarkers),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              )),
+         
+       
+              
+         
+
+          /*floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           mapController.animateCamera(CameraUpdate.newLatLngZoom(
               LatLng(userLocation.latitude, userLocation.longitude), 18));
@@ -240,16 +232,15 @@ class _SearchState extends State<Search> {
         },
         label: Text("Send Location"),
         icon: Icon(Icons.near_me),
-      ),
-    );
+      ),*/
+        ]));
   }
 
   moveCamera() {
-    mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: locator[_currentPage].locationCoords,
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: lacation[_pageController!.page!.toInt()].locationCoords,
         zoom: 14.0,
         bearing: 45.0,
         tilt: 45.0)));
   }
 }
-

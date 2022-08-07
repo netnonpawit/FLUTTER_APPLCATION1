@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/states/test_gps.dart';
+import 'package:flutter_application_1/states/testgps/screens/mymap.dart';
 
 import 'package:flutter_application_1/states/testgps/screens/search.dart';
 

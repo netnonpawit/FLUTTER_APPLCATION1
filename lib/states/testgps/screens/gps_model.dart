@@ -17,6 +17,8 @@ class locator {
       required this.locationCoords,
       //required this.image});
       });
+
+  static void forEach(Null Function(dynamic element) param0) {}
 }
 final List<locator> lacation = [
   locator(
@@ -25,7 +27,14 @@ final List<locator> lacation = [
       description:
           'ChangArena Football Stadium',
       locationCoords: LatLng(14.9658746, 103.0921753),
-      thumNail: 'https://lh5.googleusercontent.com/p/AF1QipNNzoa4RVMeOisc0vQ5m3Z7aKet5353lu0Aah0a=w90-h90-n-k-no'
+      thumNail: ''
       ),
-  
+  locator(
+      locatorName: 'BRH',
+      address: '18 W 29th St',
+      description:
+          'Buriram Hospital',
+      locationCoords: LatLng(15.005684, 103.0985359),
+      thumNail: ''
+      ),
 ];
