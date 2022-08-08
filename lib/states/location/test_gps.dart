@@ -15,7 +15,7 @@ class Mapsample extends StatefulWidget {
 
 class _MapsampleState extends State<Mapsample> {
    late Position userLocation;
-   GoogleMapController? mapController;
+  late  GoogleMapController mapController;
    Set<Polyline> _polylines = Set<Polyline>();
    List<LatLng>polylineCoordiates =[];
    late PolylinePoints polylinePoints ;
@@ -107,7 +107,7 @@ class _MapsampleState extends State<Mapsample> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          mapController!.animateCamera(CameraUpdate.newLatLngZoom(
+          mapController.animateCamera(CameraUpdate.newLatLngZoom(
               LatLng(userLocation.latitude, userLocation.longitude), 18));
           showDialog(
             context: context,
